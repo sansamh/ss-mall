@@ -12,6 +12,49 @@ import java.util.Arrays;
  */
 public class BI {
 
+    // https://www.cnblogs.com/tangzhengyue/p/4315393.html
+    public static int[] next(String pat) {
+        int[] next = new int[pat.length()];
+        final char[] chars = pat.toCharArray();
+        int j = 0;
+        int k = -1;
+        next[0] = -1;
+
+        while (j < pat.length() - 1) {
+            if (k == -1 || chars[j] == chars[k]) {
+                next[++j] = ++k;
+            } else {
+                k = next[k];
+            }
+        }
+
+        return next;
+    }
+
+    public static int kmp(String pat, String txt) {
+        final char[] patChars = pat.toCharArray();
+        final char[] txtChars = txt.toCharArray();
+        // i txt指针
+        // j pat指针
+        int i = 0, j = 0;
+        final int[] next = getNext(pat);
+
+        while (i < txt.length() && j < pat.length()) {
+            if (j == -1 || patChars[j] == txtChars[i]) {
+                j++;
+                i++;
+            } else {
+                j = next[j];
+            }
+        }
+        if (j == pat.length()) {
+            return i - j;
+        }
+
+        return -1;
+    }
+
+
     public static void bi(String pat, String txt) {
         char[] patChars = pat.toCharArray();
         char[] Txtchars = txt.toCharArray();
@@ -29,14 +72,15 @@ public class BI {
         }
         if (i == pat.length()) {
             System.out.println("find start " + (j - i));
+        } else {
+            System.out.println("-1");
         }
     }
 
     public static void main(String[] args) {
-        String pat = "abab";
-        String txt = "aaaaaaab";
-//        bi(pat, txt);
-        Arrays.stream(getNext(pat)).forEach(System.out::println);
+        String pat = "abcdeiabcd";
+        String txt = "abcdeiabcdefg";
+        System.out.println(kmp(pat, txt));
     }
 
     /**
@@ -63,6 +107,7 @@ public class BI {
                 k = next[k];
             }
         }
+        System.out.println(Arrays.toString(next));
         return next;
     }
 }
