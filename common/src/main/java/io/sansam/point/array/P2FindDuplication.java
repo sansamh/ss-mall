@@ -10,7 +10,7 @@ import io.sansam.util.ArrayUtil;
  * @author houcb
  * @since 2020/5/14 5:11 下午
  */
-public class FindDuplication {
+public class P2FindDuplication {
 
     public static int getDuplicate(int[] arr) {
         int res = -1;
@@ -41,7 +41,7 @@ public class FindDuplication {
     // ==================================测试代码==================================
 
     public static void main(String[] args) {
-        FindDuplication f = new FindDuplication();
+        P2FindDuplication f = new P2FindDuplication();
         f.test1();
         f.test2();
         f.test3();
