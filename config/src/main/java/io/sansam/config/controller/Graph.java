@@ -65,7 +65,11 @@ public class Graph {
         graph.add(7, 5);
 
 //        graph.bfs(1, 5);
-        graph.dfs(1, 5);
+//        graph.dfs(1, 5);
+
+        int[] a = {1, 2, 3, 4};
+        a[2]++;
+        System.out.println(a[2]);
     }
 
     /**
@@ -186,5 +190,39 @@ public class Graph {
             }
         }
 
+    }
+
+    public int[] topoSort() {
+        int[] res = new int[v];
+        // 入度为0的 可以执行 s先于t执行 则添加s->t t的入度+1
+        int[] degree = new int[v];
+        int w, n;
+        for (int i = 0; i < v; i++) {
+            for (int j = 0; j < linkedPoint[i].size(); j++) {
+                w = linkedPoint[i].get(j);
+                n = degree[w];
+                degree[w] = ++n;
+            }
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for (Integer in : degree) {
+            if (in == 0) {
+                queue.offer(in);
+            }
+        }
+        // 取出入度为0 更新其连接点的入度-1 如果连接点入度为0 加入队列
+        int poll = -1, s = 0;
+        while (queue.peek() != null) {
+            poll = queue.poll();
+            res[s++] = poll;
+            for (Integer integer : linkedPoint[poll]) {
+                degree[integer] = degree[integer] - 1;
+                if (degree[integer] == 0) {
+                    queue.offer(integer);
+                }
+            }
+        }
+
+        return res;
     }
 }
