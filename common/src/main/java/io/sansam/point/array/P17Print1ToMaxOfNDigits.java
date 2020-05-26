@@ -23,12 +23,15 @@ public class P17Print1ToMaxOfNDigits {
     }
 
     private static void printChars(char[] numbers) {
+        boolean isBegin = true;
         for (char number : numbers) {
-            if (number == '0') {
+            if (number == '0' && isBegin) {
                 continue;
             }
+            isBegin = false;
             System.out.print(number);
         }
+        System.out.print(" ");
 
     }
 
@@ -61,7 +64,7 @@ public class P17Print1ToMaxOfNDigits {
 //        demo.test(-1);
 //        demo.test(0);
 //        demo.test(1);
-        demo.test(2);
+        demo.test(3);
     }
 
     /**
@@ -80,13 +83,34 @@ public class P17Print1ToMaxOfNDigits {
         }
     }
 
+    public static void print1ToMaxOfNDigits2(int n) {
+        if (n <= 0) return;
+        char[] digits = new char[n];
+        Arrays.fill(digits, '0');
+        for (int i = n - 1; i >= 0; i--) {
+            while (digits[i] != '9') {
+                int m = 0;
+                digits[m]++;
+                while (m < n - 1 && digits[m] > '9') {
+                    digits[m] = '0';
+                    digits[m + 1]++;
+                    m++;
+                }
+                printChars(digits);
+            }
+            System.out.println(" ");
+        }
+
+    }
+
     // ========测试代码=============
     void test(int nDigits) {
         System.out.println("===test begin===");
         System.out.println("method1:");
         print1ToMaxOfNDigits(nDigits);
+        System.out.println();
         System.out.println("method2:");
-//        print1ToMaxOfNDigits2(nDigits);
+        print1ToMaxOfNDigits2(nDigits);
         System.out.println("===test over===");
     }
 }
