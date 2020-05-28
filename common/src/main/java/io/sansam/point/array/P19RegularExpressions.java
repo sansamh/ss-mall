@@ -55,11 +55,12 @@ package io.sansam.point.array;
  *
  * 　　2.特殊测试（null，空字符串）
  *
- *
+ * 总结：要先判断后一位是不是* 如果不是*再判断字符是否相等
+ *      要注意si和pi的位置判断，if判断里有+1的话 则要加上前提si/pi + 1 < length
  *
  */
 
-public class P20RegularExpressions {
+public class P19RegularExpressions {
 
     public static boolean match(char[] str, char[] pattern) {
         if (str == null || pattern == null) {
@@ -74,35 +75,35 @@ public class P20RegularExpressions {
             return true;
         }
         // 模式串结束 字符串还没结束
-        if (pi == pattern.length && si < str.length) {
+        if (pi >= pattern.length && si < str.length) {
             return false;
+        }
+        // 下一个模式串字符为*
+        if (pi + 1 < pattern.length && pattern[pi + 1] == '*') {
+            // 如果当前字符串匹配上了 有三种处理方式
+            // 1 假设匹配了0个字符 si不变 pi走两位 则si pi+2
+            // 2 假设匹配了1个字符 si走一位 pi走两位 则si+1 pi+2
+            // 3 假设匹配了多个字符 si继续往后 pi不变继续匹配 则si+1 pi
+            if (si < str.length && (str[si] == pattern[pi] || pattern[pi] == '.')) {
+                return doMath(str, si, pattern, pi + 2)
+                        || doMath(str, si + 1, pattern, pi + 2)
+                        || doMath(str, si + 1, pattern, pi);
+            }
+            // 没有匹配上则 si不变 pi+2
+            else {
+                return doMath(str, si, pattern, pi + 2);
+            }
         }
         // 字符相同 或者遇到 . 继续匹配下个字符
         if (si < str.length && (str[si] == pattern[pi] || pattern[pi] == '.')) {
             return doMath(str, si + 1, pattern, pi + 1);
         }
 
-        if (si < str.length && pattern[pi] == '*') {
-            // 判断pi前一个字符是什么
-            if (pi == 0) {
-                return doMath(str, si, pattern, pi + 1);
-            } else {
-                char c = pattern[pi - 1];
-                if (str[si] != c) {
-                    si++;
-                } else {
-                    while (si < str.length && str[si] == c) {
-                        si++;
-                    }
-                }
-                return doMath(str, si, pattern, pi + 1);
-            }
-        }
         return false;
     }
 
     public static void main(String[] args) {
-        P20RegularExpressions demo = new P20RegularExpressions();
+        P19RegularExpressions demo = new P19RegularExpressions();
         demo.test1();
         demo.test2();
         demo.test3();
