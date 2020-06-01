@@ -49,4 +49,16 @@ public class P27MirrorOfBinaryTree {
             this.val = val;
         }
     }
+
+    public boolean findNode(TreeNode root, int target) {
+        if (root == null) return false;
+
+        if (root.val == target) return true;
+
+        if (root.val > target) return findNode(root.left, target);
+
+        return findNode(root.right, target);
+
+
+    }
 }

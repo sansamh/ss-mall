@@ -11,6 +11,7 @@ package io.sansam.point.array;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 /**
  * 题目
@@ -37,6 +38,8 @@ import java.util.Collections;
  * 　　3.字符串和字符数组间的转化：str.toCharArray()     String.valueOf(strArray)
  * <p>
  * 　　4.数组在递归过程中进行了交换后，最终要记得交换回来（代码最后几行）
+ *
+ *  变种解法 https://www.cnblogs.com/boris1221/p/9388209.html
  */
 public class P38StringPermutation {
 
@@ -69,9 +72,35 @@ public class P38StringPermutation {
         strArr[b] = temp;
     }
 
+    Stack<Character> stack = new Stack<>();
+
     public static void main(String[] args) {
         String s = "abc";
         System.out.println(permutation(s));
+
+        new P38StringPermutation().helper(s.toCharArray());
+    }
+
+    public void helper(char[] array) {
+        for (int i = 1; i <= array.length; i++)
+            combination(array, 0, i);
+    }
+
+    private void combination(char[] strArr, int begin, int num) {
+        if (num == 0) {
+            System.out.println(stack);
+            return;
+        }
+        if (begin >= strArr.length) {
+            return;
+        } else {
+            //把第一个字符放入组合中,在剩余的字符中选取num-1个字符
+            stack.push(strArr[begin]);
+            combination(strArr, begin + 1, num - 1);
+            //组合里不包含第一个字符,则下一步在剩余的字符中选取num个字符
+            stack.pop();
+            combination(strArr, begin + 1, num);
+        }
     }
 
 }
