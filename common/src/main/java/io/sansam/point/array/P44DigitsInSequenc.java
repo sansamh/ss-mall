@@ -38,6 +38,10 @@ package io.sansam.point.array;
  */
 public class P44DigitsInSequenc {
 
+    public static void main(String[] args) {
+        System.out.println(new P44DigitsInSequenc().digitAtIndex(1000));
+    }
+
     public int digitAtIndex(int index) {
         if (index < 0) {
             return -1;
@@ -45,16 +49,23 @@ public class P44DigitsInSequenc {
 
         int digits = 1;
         while (true) {
+            // 找到m位数 所占数字个数
             int numbers = numbersOfIntegers(digits);  //m位数的个数
+            // 如果index小于m位数 每个数字所占的字符数 则index位于m位数之间
             if (index < numbers * digits)
                 return getDigit(index, digits);
+            // 否则index减去 m位数所占字符数
             index -= numbers * digits;
             digits++;
         }
     }
 
-    private int getDigit(int index, int digits) {
-        return 0;
+    private int getDigit(int index, int m) {
+        int number = getFirstNumber(m) + index / m;  //对应的m位数
+        int indexFromRight = m - index % m;  //在数字中的位置
+        for (int i = 1; i < indexFromRight; i++)
+            number /= 10;
+        return number % 10;
     }
 
     /**
@@ -70,5 +81,17 @@ public class P44DigitsInSequenc {
         }
         // 9 * 10^(digits-1)
         return (int) (9 * Math.pow(10, digits - 1));
+    }
+
+    /**
+     * m位数的第一个数字
+     *
+     * @param m
+     * @return
+     */
+    private int getFirstNumber(int m) {
+        if (m == 1)
+            return 0;
+        return (int) Math.pow(10, m - 1);
     }
 }
