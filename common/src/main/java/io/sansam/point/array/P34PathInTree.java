@@ -67,7 +67,7 @@ public class P34PathInTree {
             while (i < pathList.size() && nodeList.size() < pathList.get(i).size()) {
                 i++;
             }
-            pathList.add(i, nodeList);
+            pathList.add(i, new ArrayList<>(nodeList));
         }
         // 非叶子节点
         else {
