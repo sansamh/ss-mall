@@ -10,6 +10,6 @@ package io.sansam.sort;
  */
 public interface Sort {
 
-    void sort(int[] array);
+    int[] sort(int[] array);
 
 }

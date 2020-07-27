@@ -27,7 +27,7 @@ public class GuiBingSort implements Sort {
      */
 
     @Override
-    public void sort(int[] array) {
+    public int[] sort(int[] array) {
         if (array == null || array.length <= 0) {
             System.out.println("error input array");
         }
@@ -38,6 +38,8 @@ public class GuiBingSort implements Sort {
         helper(array, 0, array.length - 1);
 
         SortUtil.printArray(array);
+
+        return array;
     }
 
     private void helper(int[] array, int start, int end) {
