@@ -2,8 +2,6 @@ package io.sansam;
 
 import org.junit.Test;
 
-import java.util.HashMap;
-
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -32,5 +30,13 @@ public class AppTest {
         System.out.println(res);
 
 
+    }
+
+    public static void main1(String[] args) {
+        int COUNT_BITS = Integer.SIZE - 3;
+        int capacity = (1 << COUNT_BITS) - 1;
+
+        System.out.println(Integer.toBinaryString(capacity));
+        System.out.println(Integer.toBinaryString(~capacity));
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="company" class="io.sansam.spring.vo.Company">
+        <property name="name" value="Apple"></property>
+        <property name="employee" ref="employee"></property>
+    </bean>
+    <bean id="employee" class="io.sansam.spring.vo.Employee">
+        <property name="name" value="Jack"></property>
+    </bean>
+</beans>

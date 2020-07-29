@@ -23,7 +23,7 @@ public class BIODemo {
     public static void main(String[] args) {
         BIOServer server = new BIOServer();
         server.start();
-
+        server.start();
 
         try (Socket client = new Socket(InetAddress.getLocalHost(), server.getPort())) {
             System.out.println("client start");
