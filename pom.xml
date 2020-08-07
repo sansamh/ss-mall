@@ -12,6 +12,8 @@
     <modules>
         <module>config</module>
         <module>common</module>
+        <module>rabbit-provider-8101</module>
+        <module>rabbit-consumer-8201</module>
     </modules>
 
     <properties>
