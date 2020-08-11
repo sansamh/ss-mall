@@ -1,5 +1,6 @@
 package io.sansam.service.mq.impl;
 
+import io.sansam.config.MapperUtils;
 import io.sansam.service.mq.IMessageService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,21 @@ public class MessageServiceImpl implements IMessageService {
 
     @Override
     public String sendDirect(String routingKey, String exchangeName, Object msg) {
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, msg);
-        return "send direct ok";
+        try {
+            rabbitTemplate.convertAndSend(exchangeName, routingKey, MapperUtils.obj2json(msg));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "send direct ok " + msg;
     }
 
     @Override
     public String sendTopic(String routingKey, String exchangeName, Object msg) {
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, msg);
-        return "send topic ok";
+        try {
+            rabbitTemplate.convertAndSend(exchangeName, routingKey, MapperUtils.obj2json(msg));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "send topic ok " + msg;
     }
 }

@@ -41,8 +41,8 @@ public class RabbitMQAckAspect {
     @Around("rabbitMQAckPointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         long beginTime = System.currentTimeMillis();
-        Message message = (Message) point.getArgs()[1];
-        Channel channel = (Channel) point.getArgs()[2];
+        Message message = (Message) point.getArgs()[0];
+        Channel channel = (Channel) point.getArgs()[1];
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
         Object result = null;
         try {

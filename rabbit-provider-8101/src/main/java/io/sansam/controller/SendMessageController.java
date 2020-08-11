@@ -81,4 +81,20 @@ public class SendMessageController {
         return messageService.sendTopic(routingKey, exchangeName, map);
     }
 
+
+    @GetMapping(value = "/send/fanout")
+    public String sendFanout() {
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+//        Map<String, String> map = new HashMap<>();
+//        map.put("msgId", UUID.randomUUID().toString());
+//        map.put("msgContent", "Second Queue Message");
+//        map.put("createTime", now);
+        String map = "bad";
+        String exchangeName = "fanoutExchange";
+        String routingKey = "topic.second";
+
+        return messageService.sendTopic(routingKey, exchangeName, map);
+    }
+
 }

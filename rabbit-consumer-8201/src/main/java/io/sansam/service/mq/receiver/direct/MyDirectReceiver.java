@@ -8,6 +8,8 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * <p>
  * MyDirectReceiver
@@ -18,14 +20,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-@RabbitListener(queues = "MyDirectQueue")
 public class MyDirectReceiver {
 
+    @RabbitListener(queues = "MyDirectQueue")
     @RabbitHandler
     @RabbitMQAck
-    public String process(String msg, Message message, Channel channel) throws Exception {
-
-        System.out.println("消费者RabbitDemoConsumer从RabbitMQ服务端消费消息：" + msg);
+    public String process(Message message, Channel channel) throws Exception {
+        String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+        log.info("消费者RabbitDemoConsumer从RabbitMQ服务端消费消息：" + msg);
         if ("bad".equals(msg)) {
             throw new IllegalArgumentException("测试：抛出可重回队列的异常");
         }
